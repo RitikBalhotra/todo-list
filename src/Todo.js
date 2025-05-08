@@ -171,7 +171,7 @@ const Todo = () => {
             {finished.length > 0 ? (
               <ul className="list-group">
                 <h2 className="text-center p-1 bg-success rounded-top">
-                  Finished List
+                  Finished Todo's
                 </h2>
                 {finished.map((item, index) => (
                   <li
