@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./Todo.css"; // <-- Import your custom styles
 
 const Todo = () => {
   const [task, setTask] = useState("");
@@ -18,7 +19,6 @@ const Todo = () => {
     if (finishedList) setFinished(JSON.parse(finishedList));
   }, []);
 
-  // new todo submit function
   const handleSubmit = () => {
     if (task.trim()) {
       const now = new Date();
@@ -35,7 +35,6 @@ const Todo = () => {
     }
   };
 
-  // delete function
   const handleDelete = (index, isFinished) => {
     const dlt = window.confirm("This TODO will be deleted Permanently!");
     if (dlt) {
@@ -52,7 +51,6 @@ const Todo = () => {
     }
   };
 
-  // update function
   const handleUpdate = () => {
     if (isUpdate && currentId !== null) {
       const updateTodos = todos.map((item, index) =>
@@ -67,18 +65,14 @@ const Todo = () => {
     }
   };
 
-  // chekcbox change function
   const handleCheckBoxChange = (index) => {
     if (selected.includes(index)) {
       setSelected(selected.filter((i) => i !== index));
-      console.log(selected);
     } else {
       setSelected([...selected, index]);
-      console.log(selected);
     }
   };
 
-  // move to Finish function
   const addFinished = () => {
     const toMove = todos.filter((_, index) => selected.includes(index));
     const remain = todos.filter((_, index) => !selected.includes(index));
@@ -90,10 +84,9 @@ const Todo = () => {
 
     localStorage.setItem("todoList", JSON.stringify(remain));
     localStorage.setItem("finishedList", JSON.stringify(updateFinished));
-    toast.success("Move to Finished successfuly!");
+    toast.success("Moved to Finished!");
   };
 
-  // Edit function
   const handleEdit = (id) => {
     const editTodo = todos[id];
     setTask(editTodo.text);
@@ -103,10 +96,20 @@ const Todo = () => {
 
   return (
     <>
-      <div className="d-flex justify-content-center min-vh-100 bg-light">
+      <div className="animated-bg">
+        <div className="blob blob1"></div>
+        <div className="blob blob2"></div>
+      </div>
+
+      <div className="d-flex justify-content-center min-vh-100 align-items-center">
         <ToastContainer position="top-right" autoClose={2000} />
-        <div className="p-4 rounded shadow bg-white" style={{ width: "700px" }}>
-          <h3 className="text-center mb-4 bg-primary text-white p-2">TODO</h3>
+        <div
+          className="p-4 rounded shadow bg-white todo-container"
+          style={{ width: "700px" }}
+        >
+          <h3 className="text-center mb-4 bg-primary text-white p-2 rounded">
+            TODO
+          </h3>
 
           <div className="d-flex mb-3 gap-2">
             <input
@@ -129,16 +132,16 @@ const Todo = () => {
 
           <hr />
 
-          {/* Todo List  */}
           {todos.length > 0 && (
             <ul className="list-group mb-3">
-              <div className="d-flex justify-content-between mb-2">
-                {" "}
-                <li className="list-group-item active text-center">
-                  Active Tasks
-                </li>{" "}
-                <button className="btn btn-success" disabled={selected.length === 0} onClick={addFinished}>
-                  Move to Finish
+              <div className="d-flex justify-content-between align-items-center mb-3 px-2">
+                <h4 className="text-primary fw-bold m-0">📝 Active Tasks</h4>
+                <button
+                  className="btn move-finish-btn"
+                  disabled={selected.length === 0}
+                  onClick={addFinished}
+                >
+                  ✅ Move to Finished
                 </button>
               </div>
 
@@ -155,8 +158,7 @@ const Todo = () => {
                       onChange={() => handleCheckBoxChange(index)}
                     />
                     <strong>{item.text}</strong>
-                    <div className="text-muted small">{item.time}</div>{" "}
-                    {/* shows date/time */}
+                    <div className="text-muted small">{item.time}</div>
                   </div>
                   <div>
                     <button
@@ -180,7 +182,7 @@ const Todo = () => {
           {finished.length > 0 && (
             <ul className="list-group">
               <li className="list-group-item bg-success text-white text-center">
-                Finished TODOs
+                Finished TODO's
               </li>
               {finished.map((item, index) => (
                 <li
