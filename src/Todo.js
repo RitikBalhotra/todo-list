@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./Todo.css"; // <-- Import your custom styles
+import "./Todo.css";
 
 const Todo = () => {
   const [task, setTask] = useState("");
@@ -19,6 +19,8 @@ const Todo = () => {
     if (finishedList) setFinished(JSON.parse(finishedList));
   }, []);
 
+
+  // Submit Function 
   const handleSubmit = () => {
     if (task.trim()) {
       const now = new Date();
@@ -35,6 +37,8 @@ const Todo = () => {
     }
   };
 
+
+  // Delete Function 
   const handleDelete = (index, isFinished) => {
     const dlt = window.confirm("This TODO will be deleted Permanently!");
     if (dlt) {
@@ -51,6 +55,8 @@ const Todo = () => {
     }
   };
 
+
+  // Update Function
   const handleUpdate = () => {
     if (isUpdate && currentId !== null) {
       const updateTodos = todos.map((item, index) =>
@@ -65,6 +71,8 @@ const Todo = () => {
     }
   };
 
+
+  // Handle Change Box
   const handleCheckBoxChange = (index) => {
     if (selected.includes(index)) {
       setSelected(selected.filter((i) => i !== index));
@@ -73,6 +81,8 @@ const Todo = () => {
     }
   };
 
+
+  // Add Finished Function 
   const addFinished = () => {
     const toMove = todos.filter((_, index) => selected.includes(index));
     const remain = todos.filter((_, index) => !selected.includes(index));
@@ -87,6 +97,8 @@ const Todo = () => {
     toast.success("Moved to Finished!");
   };
 
+
+  // Edit Function 
   const handleEdit = (id) => {
     const editTodo = todos[id];
     setTask(editTodo.text);
