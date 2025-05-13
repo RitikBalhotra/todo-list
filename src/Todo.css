@@ -50,3 +50,15 @@ body, html {
   color: #666;
 }
 
+/* For finished and active section headers */
+h4 {
+    font-size: 1.2rem;
+  }
+  
+  .list-group-item {
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .list-group-item:hover {
+    background-color: #f9f9f9;
+  }

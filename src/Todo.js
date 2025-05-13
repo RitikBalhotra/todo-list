@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./Todo.css";
 
 const Todo = () => {
@@ -19,8 +20,7 @@ const Todo = () => {
     if (finishedList) setFinished(JSON.parse(finishedList));
   }, []);
 
-
-  // Submit Function 
+  // Submit Function
   const handleSubmit = () => {
     if (task.trim()) {
       const now = new Date();
@@ -37,8 +37,7 @@ const Todo = () => {
     }
   };
 
-
-  // Delete Function 
+  // Delete Function
   const handleDelete = (index, isFinished) => {
     const dlt = window.confirm("This TODO will be deleted Permanently!");
     if (dlt) {
@@ -55,7 +54,6 @@ const Todo = () => {
     }
   };
 
-
   // Update Function
   const handleUpdate = () => {
     if (isUpdate && currentId !== null) {
@@ -71,7 +69,6 @@ const Todo = () => {
     }
   };
 
-
   // Handle Change Box
   const handleCheckBoxChange = (index) => {
     if (selected.includes(index)) {
@@ -81,8 +78,7 @@ const Todo = () => {
     }
   };
 
-
-  // Add Finished Function 
+  // Add Finished Function
   const addFinished = () => {
     const toMove = todos.filter((_, index) => selected.includes(index));
     const remain = todos.filter((_, index) => !selected.includes(index));
@@ -97,8 +93,7 @@ const Todo = () => {
     toast.success("Moved to Finished!");
   };
 
-
-  // Edit Function 
+  // Edit Function
   const handleEdit = (id) => {
     const editTodo = todos[id];
     setTask(editTodo.text);
@@ -180,10 +175,10 @@ const Todo = () => {
                       Edit
                     </button>
                     <button
-                      className="btn btn-sm btn-danger"
+                      className="btn btn-sm btn-outline-danger"
                       onClick={() => handleDelete(index, false)}
                     >
-                      Delete
+                      <i className="fas fa-trash"></i>
                     </button>
                   </div>
                 </li>
@@ -192,10 +187,10 @@ const Todo = () => {
           )}
 
           {finished.length > 0 && (
-            <ul className="list-group">
-              <li className="list-group-item bg-success text-white text-center">
-                Finished TODO's
-              </li>
+            <ul className="list-group mt-4">
+              <div className="d-flex justify-content-between align-items-center mb-2 px-2">
+                <h4 className="text-success fw-bold m-0">✅ Finished Tasks</h4>
+              </div>
               {finished.map((item, index) => (
                 <li
                   key={index}
@@ -208,16 +203,17 @@ const Todo = () => {
                       checked
                       readOnly
                     />
-                    <del>{item.text}</del>
+                    <del className="text-secondary fw-medium">{item.text}</del>
                     <br />
                     <small className="text-muted">{item.time}</small>
                   </div>
                   <div>
                     <button
-                      className="btn btn-sm btn-danger"
+                      className="btn btn-sm btn-outline-danger"
                       onClick={() => handleDelete(index, true)}
+                      title="Delete"
                     >
-                      Delete
+                      <i className="fas fa-trash"></i>
                     </button>
                   </div>
                 </li>
